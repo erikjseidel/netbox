@@ -142,10 +142,10 @@ def extend_rearport_cable_paths(instance, created, raw, **kwargs):
 
 
 #
-# Wireless links
+# Virtual links
 #
 
-@receiver(post_save, sender=VirtalLink)
+@receiver(post_save, sender=VirtualLink)
 def update_connected_interfaces(instance, created, raw=False, **kwargs):
     """
     When a VirtalLink is saved, save a reference to it on each connected interface.
