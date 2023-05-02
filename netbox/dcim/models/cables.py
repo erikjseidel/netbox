@@ -516,7 +516,7 @@ class CablePath(models.Model):
             elif link is None:
                 # Otherwise, halt the trace if no link exists
                 break
-            assert type(link) in (Cable, WirelessLink, VirtualLink)
+            assert type(link) in (Cable, WirelessLink, models.VirtualLink)
 
             # Step 3: Record the link and update path status if not "connected"
             path.append([object_to_path_node(link)])
