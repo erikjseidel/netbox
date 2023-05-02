@@ -50,7 +50,8 @@ __all__ = (
     'SiteFilterForm',
     'SiteGroupFilterForm',
     'VirtualChassisFilterForm',
-    'VirtualDeviceContextFilterForm'
+    'VirtualDeviceContextFilterForm',
+    'VirtualLinkFilterForm',
 )
 
 
@@ -1404,3 +1405,17 @@ class InterfaceConnectionFilterForm(FilterForm):
         },
         label=_('Device')
     )
+
+
+class VirtualLinkFilterForm(TenancyFilterForm, NetBoxModelFilterSetForm):
+    model = VirtualLink
+    fieldsets = (
+        (None, ('q', 'filter_id', 'tag')),
+        ('Attributes', ('status',)),
+        ('Tenant', ('tenant_group_id', 'tenant_id')),
+    )
+    status = forms.ChoiceField(
+        required=False,
+        choices=add_blank_choice(LinkStatusChoices)
+    )
+    tag = TagFilterField(model)
