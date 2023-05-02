@@ -10,6 +10,7 @@ import utilities.fields
 import utilities.ordering
 import utilities.query_functions
 import utilities.validators
+import taggit.managers
 
 
 class Migration(migrations.Migration):
