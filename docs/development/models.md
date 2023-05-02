@@ -47,6 +47,7 @@ These are considered the "core" application models which are used to model netwo
 * [dcim.Site](../models/dcim/site.md)
 * [dcim.VirtualChassis](../models/dcim/virtualchassis.md)
 * [dcim.VirtualDeviceContext](../models/dcim/virtualdevicecontext.md)
+* [dcim.VirtualLink](../models/dcim/virtuallink.md)
 * [ipam.Aggregate](../models/ipam/aggregate.md)
 * [ipam.ASN](../models/ipam/asn.md)
 * [ipam.FHRPGroup](../models/ipam/fhrpgroup.md)

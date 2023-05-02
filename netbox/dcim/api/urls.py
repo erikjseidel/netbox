@@ -62,6 +62,9 @@ router.register('cable-terminations', views.CableTerminationViewSet)
 # Virtual chassis
 router.register('virtual-chassis', views.VirtualChassisViewSet)
 
+# Virtual links
+router.register('virtual-links', views.VirtualLinkViewSet)
+
 # Power
 router.register('power-panels', views.PowerPanelViewSet)
 router.register('power-feeds', views.PowerFeedViewSet)

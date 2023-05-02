@@ -20,4 +20,9 @@ class Migration(migrations.Migration):
             name='tenant',
             field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='cables', to='tenancy.tenant'),
         ),
+        migrations.AddField(
+            model_name='virtuallink',
+            name='tenant',
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='virtual_links', to='tenancy.tenant'),
+        ),
     ]

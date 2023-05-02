@@ -359,6 +359,12 @@ INTERFACE_BUTTONS = """
             <i class="mdi mdi-wifi-off" aria-hidden="true"></i>
         </a>
     {% endif %}
+{% elif record.virtual_link %}
+    {% if perms.dcim.delete_virtuallink %}
+        <a href="{% url 'dcim:virtuallink_delete' pk=record.virtual_link.pk %}?return_url={% url 'dcim:device_interfaces' pk=object.pk %}" title="Delete virtual link" class="btn btn-danger btn-sm">
+            <i class="mdi mdi-link-off" aria-hidden="true"></i>
+        </a>
+    {% endif %}
 {% elif record.is_wired and perms.dcim.add_cable %}
     <a href="#" class="btn btn-outline-dark btn-sm disabled"><i class="mdi mdi-transit-connection-variant" aria-hidden="true"></i></a>
     <a href="#" class="btn btn-outline-dark btn-sm disabled"><i class="mdi mdi-lan-connect" aria-hidden="true"></i></a>
@@ -380,6 +386,10 @@ INTERFACE_BUTTONS = """
 {% elif record.is_wireless and perms.wireless.add_wirelesslink %}
     <a href="{% url 'wireless:wirelesslink_add' %}?site_a={{ record.device.site.pk }}&location_a={{ record.device.location.pk }}&device_a={{ record.device_id }}&interface_a={{ record.pk }}&site_b={{ record.device.site.pk }}&location_b={{ record.device.location.pk }}" class="btn btn-success btn-sm">
         <span class="mdi mdi-wifi-plus" aria-hidden="true"></span>
+    </a>
+{% elif perms.dcim.add_virtuallink %}
+    <a href="{% url 'dcim:virtuallink_add' %}?site_a={{ record.device.site.pk }}&location_a={{ record.device.location.pk }}&device_a={{ record.device_id }}&interface_a={{ record.pk }}&site_b={{ record.device.site.pk }}&location_b={{ record.device.location.pk }}" class="btn btn-success btn-sm">
+        <span class="mdi mdi-link" aria-hidden="true"></span>
     </a>
 {% endif %}
 """

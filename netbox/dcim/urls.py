@@ -352,4 +352,11 @@ urlpatterns = [
     path('power-feeds/delete/', views.PowerFeedBulkDeleteView.as_view(), name='powerfeed_bulk_delete'),
     path('power-feeds/<int:pk>/', include(get_model_urls('dcim', 'powerfeed'))),
 
+    # Wireless links
+    path('virtual-links/', views.VirtualLinkListView.as_view(), name='virtuallink_list'),
+    path('virtual-links/add/', views.VirtualLinkEditView.as_view(), name='virtuallink_add'),
+    path('virtual-links/import/', views.VirtualLinkBulkImportView.as_view(), name='virtuallink_import'),
+    path('virtual-links/edit/', views.VirtualLinkBulkEditView.as_view(), name='virtuallink_bulk_edit'),
+    path('virtual-links/delete/', views.VirtualLinkBulkDeleteView.as_view(), name='virtuallink_bulk_delete'),
+    path('virtual-links/<int:pk>/', include(get_model_urls('dcim', 'virtuallink'))),
 ]

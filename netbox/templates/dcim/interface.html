@@ -172,6 +172,32 @@
                 </tr>
               {% endwith %}
             </table>
+          {% elif object.virtual_link %}
+            <table class="table table-hover">
+              <tr>
+                <th scope="row">Virtual Link</th>
+                <td>
+                  {{ object.virtual_link|linkify }}
+                  <a href="{% url 'dcim:interface_trace' pk=object.pk %}" class="btn btn-primary btn-sm lh-1" title="Trace">
+                    <i class="mdi mdi-transit-connection-variant" aria-hidden="true"></i>
+                  </a>
+                </td>
+              </tr>
+              {% with peer_interface=object.link_peers.0 %}
+                <tr>
+                  <th scope="row">Device</th>
+                  <td>{{ peer_interface.device|linkify }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Name</th>
+                  <td>{{ peer_interface|linkify }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Type</th>
+                  <td>{{ peer_interface.get_type_display }}</td>
+                </tr>
+              {% endwith %}
+            </table>
           {% else %}
             <div class="text-muted">
               Not Connected
@@ -201,6 +227,12 @@
                 <div class="dropdown float-end">
                   <a href="{% url 'wireless:wirelesslink_add' %}?interface_a={{ object.pk }}&return_url={{ object.get_absolute_url }}" class="btn btn-primary btn-sm">
                     <span class="mdi mdi-wifi-plus" aria-hidden="true"></span> Connect
+                  </a>
+                </div>
+              {% elif perms.dcim.add_virtuallink %}
+                <div class="dropdown float-end">
+                  <a href="{% url 'dcim:virtuallink_add' %}?interface_a={{ object.pk }}&return_url={{ object.get_absolute_url }}" class="btn btn-primary btn-sm">
+                    <span class="mdi mdi-link" aria-hidden="true"></span> Connect
                   </a>
                 </div>
               {% endif %}

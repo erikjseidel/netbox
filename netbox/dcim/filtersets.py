@@ -69,6 +69,7 @@ __all__ = (
     'SiteGroupFilterSet',
     'VirtualChassisFilterSet',
     'VirtualDeviceContextFilterSet',
+    'VirtualLinkFilterSet'
 )
 
 
@@ -1965,3 +1966,24 @@ class InterfaceConnectionFilterSet(ConnectionFilterSet):
     class Meta:
         model = Interface
         fields = []
+
+
+class VirtualLinkFilterSet(NetBoxModelFilterSet, TenancyFilterSet):
+    interface_a_id = MultiValueNumberFilter()
+    interface_b_id = MultiValueNumberFilter()
+    status = django_filters.MultipleChoiceFilter(
+        choices=LinkStatusChoices
+    )
+
+    class Meta:
+        model = VirtualLink
+        fields = ['id', 'description']
+
+    def search(self, queryset, name, value):
+        if not value.strip():
+            return queryset
+        qs_filter = (
+            Q(ssid__icontains=value) |
+            Q(description__icontains=value)
+        )
+        return queryset.filter(qs_filter)

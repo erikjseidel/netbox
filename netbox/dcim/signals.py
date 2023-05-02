@@ -5,7 +5,7 @@ from django.dispatch import receiver
 
 from .choices import CableEndChoices, LinkStatusChoices
 from .models import (
-    Cable, CablePath, CableTermination, Device, FrontPort, PathEndpoint, PowerPanel, Rack, Location, VirtualChassis,
+    VirtualLink, Cable, CablePath, CableTermination, Device, FrontPort, PathEndpoint, PowerPanel, Rack, Location, VirtualChassis,
 )
 from .models.cables import trace_paths
 from .utils import create_cablepath, rebuild_paths
@@ -139,3 +139,51 @@ def extend_rearport_cable_paths(instance, created, raw, **kwargs):
         rearport = instance.rear_port
         for cablepath in CablePath.objects.filter(_nodes__contains=rearport):
             cablepath.retrace()
+
+
+#
+# Wireless links
+#
+
+@receiver(post_save, sender=VirtalLink)
+def update_connected_interfaces(instance, created, raw=False, **kwargs):
+    """
+    When a VirtalLink is saved, save a reference to it on each connected interface.
+    """
+    logger = logging.getLogger('netbox.dcim.virtuallink')
+    if raw:
+        logger.debug(f"Skipping endpoint updates for imported virtual link {instance}")
+        return
+
+    if instance.interface_a.virtual_link != instance:
+        logger.debug(f"Updating interface A for virtual link {instance}")
+        instance.interface_a.virtual_link = instance
+        instance.interface_a.save()
+    if instance.interface_b.cable != instance:
+        logger.debug(f"Updating interface B for virtual link {instance}")
+        instance.interface_b.virtual_link = instance
+        instance.interface_b.save()
+
+    # Create/update cable paths
+    if created:
+        for interface in (instance.interface_a, instance.interface_b):
+            create_cablepath([interface])
+
+
+@receiver(post_delete, sender=VirtualLink)
+def nullify_connected_interfaces(instance, **kwargs):
+    """
+    When a VirtualLink is deleted, update its two connected Interfaces
+    """
+    logger = logging.getLogger('netbox.dcim.virtuallink')
+
+    if instance.interface_a is not None:
+        logger.debug(f"Nullifying interface A for virtual link {instance}")
+        Interface.objects.filter(pk=instance.interface_a.pk).update(virtual_link=None)
+    if instance.interface_b is not None:
+        logger.debug(f"Nullifying interface B for virtual link {instance}")
+        Interface.objects.filter(pk=instance.interface_b.pk).update(virtual_link=None)
+
+    # Delete and retrace any dependent cable paths
+    for cablepath in CablePath.objects.filter(_nodes__contains=instance):
+        cablepath.delete()

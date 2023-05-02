@@ -47,6 +47,7 @@ __all__ = [
     'NestedSiteGroupSerializer',
     'NestedVirtualChassisSerializer',
     'NestedVirtualDeviceContextSerializer',
+    'NestedVirtualLinkSerializer',
 ]
 
 
@@ -513,3 +514,9 @@ class NestedVirtualDeviceContextSerializer(WritableNestedSerializer):
     class Meta:
         model = models.VirtualDeviceContext
         fields = ['id', 'url', 'display', 'name', 'identifier', 'device']
+
+
+class NestedVirtualLinkSerializer(WritableNestedSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='dcim-api:virtuallink-detail')
+    class Meta:
+        model = VirtalLink

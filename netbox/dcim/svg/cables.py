@@ -258,6 +258,41 @@ class CableTraceSVG:
 
         return connector
 
+    def draw_virtallink(self, virtuallink):
+        """
+        Draw a line with labels representing a WirelessLink.
+        """
+        group = Group(class_='connector')
+
+        labels = [
+            f'Virtual link {virtuallink}',
+            virtuallink.get_status_display()
+        ]
+
+        # Draw the wireless link
+        start = (OFFSET + self.center, self.cursor)
+        height = PADDING * 2 + LINE_HEIGHT * len(labels) + PADDING * 2
+        end = (start[0], start[1] + height)
+        line = Line(start=start, end=end, class_='wireless-link')  # CHANGE ME
+        group.add(line)
+
+        self.cursor += PADDING * 2
+
+        # Add link
+        link = Hyperlink(href=f'{self.base_url}{virtuallink.get_absolute_url()}', target='_parent')
+
+        # Add text label(s)
+        for i, label in enumerate(labels):
+            self.cursor += LINE_HEIGHT
+            text_coords = (self.center + PADDING * 2, self.cursor - LINE_HEIGHT / 2)
+            text = Text(label, insert=text_coords, class_='bold' if not i else [])
+            link.add(text)
+
+        group.add(link)
+        self.cursor += PADDING * 2
+
+        return group
+
     def draw_wirelesslink(self, wirelesslink):
         """
         Draw a line with labels representing a WirelessLink.
@@ -315,7 +350,7 @@ class CableTraceSVG:
         """
         Return an SVG document representing a cable trace.
         """
-        from dcim.models import Cable
+        from dcim.models import Cable, VirtualLink
         from wireless.models import WirelessLink
 
         traced_path = self.origin.trace()
@@ -332,7 +367,7 @@ class CableTraceSVG:
             # Near end termination(s)
             terminations = self.draw_terminations(near_ends)
 
-            # Connector (a Cable or WirelessLink)
+            # Connector (a Cable or WirelessLink or VirtualLink)
             if links:
                 link = links[0]  # Remove Cable from list
 
@@ -355,6 +390,11 @@ class CableTraceSVG:
                 elif type(link) is WirelessLink:
                     wirelesslink = self.draw_wirelesslink(link)
                     self.connectors.append(wirelesslink)
+
+                # VirtualLink
+                elif type(link) is VirtualLink:
+                    virtuallink = self.draw_virtuallink(link)
+                    self.connectors.append(virtuallink)
 
                 # Far end termination(s)
                 if len(far_ends) > 1:

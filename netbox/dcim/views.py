@@ -191,6 +191,49 @@ class PathTraceView(generic.ObjectView):
             'svg_url': svg_url,
         }
 
+#
+# Virtual Links
+#
+
+class VirtualLinkListView(generic.ObjectListView):
+    queryset = VirtualLink.objects.all()
+    filterset = filtersets.VirtualLinkFilterSet
+    filterset_form = forms.VirtualLinkFilterForm
+    table = tables.VirtualLinkTable
+
+
+@register_model_view(VirtualLink)
+class VirtualLinkView(generic.ObjectView):
+    queryset = VirtualLink.objects.all()
+
+
+@register_model_view(VirtualLink, 'edit')
+class VirtualLinkEditView(generic.ObjectEditView):
+    queryset = VirtualLink.objects.all()
+    form = forms.VirtualLinkForm
+
+
+@register_model_view(VirtualLink, 'delete')
+class WirelessLinkDeleteView(generic.ObjectDeleteView):
+    queryset = VirtualLink.objects.all()
+
+
+class VirtualLinkBulkImportView(generic.BulkImportView):
+    queryset = VirtualLink.objects.all()
+    model_form = forms.VirtualLinkImportForm
+
+
+class VirtualLinkBulkEditView(generic.BulkEditView):
+    queryset = VirtualLink.objects.all()
+    filterset = filtersets.VirtualLinkFilterSet
+    table = tables.VirtualLinkTable
+    form = forms.VirtualLinkBulkEditForm
+
+
+class VirtualLinkBulkDeleteView(generic.BulkDeleteView):
+    queryset = VirtualLink.objects.all()
+    filterset = filtersets.VirtualLinkFilterSet
+    table = tables.VirtualLinkTable
 
 #
 # Regions

@@ -50,6 +50,7 @@ __all__ = (
     'SiteType',
     'SiteGroupType',
     'VirtualChassisType',
+    'VirtualLinkType',
 )
 
 
@@ -508,3 +509,8 @@ class VirtualDeviceContextType(NetBoxObjectType):
         model = models.VirtualDeviceContext
         fields = '__all__'
         filterset_class = filtersets.VirtualDeviceContextFilterSet
+
+
+class VirtualLinkType(NetBoxObjectType):
+    class Meta:
+        model = models.VirtualLink

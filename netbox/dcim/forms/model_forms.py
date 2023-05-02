@@ -64,7 +64,8 @@ __all__ = (
     'SiteGroupForm',
     'VCMemberSelectForm',
     'VirtualChassisForm',
-    'VirtualDeviceContextForm'
+    'VirtualDeviceContextForm',
+    'WirelessLinkForm',
 )
 
 
@@ -1417,4 +1418,102 @@ class VirtualDeviceContextForm(TenancyForm, NetBoxModelForm):
         fields = [
             'device', 'name', 'status', 'identifier', 'primary_ip4', 'primary_ip6', 'tenant_group', 'tenant',
             'comments', 'tags'
+        ]
+
+
+class VirtualLinkForm(TenancyForm, NetBoxModelForm):
+    site_a = DynamicModelChoiceField(
+        queryset=Site.objects.all(),
+        required=False,
+        label=_('Site'),
+        initial_params={
+            'devices': '$device_a',
+        }
+    )
+    location_a = DynamicModelChoiceField(
+        queryset=Location.objects.all(),
+        query_params={
+            'site_id': '$site_a',
+        },
+        required=False,
+        label=_('Location'),
+        initial_params={
+            'devices': '$device_a',
+        }
+    )
+    device_a = DynamicModelChoiceField(
+        queryset=Device.objects.all(),
+        query_params={
+            'site_id': '$site_a',
+            'location_id': '$location_a',
+        },
+        required=False,
+        label=_('Device'),
+        initial_params={
+            'interfaces': '$interface_a'
+        }
+    )
+    interface_a = DynamicModelChoiceField(
+        queryset=Interface.objects.all(),
+        query_params={
+#            'kind': 'virtual',
+            'device_id': '$device_a',
+        },
+        disabled_indicator='_occupied',
+        label=_('Interface')
+    )
+    site_b = DynamicModelChoiceField(
+        queryset=Site.objects.all(),
+        required=False,
+        label=_('Site'),
+        initial_params={
+            'devices': '$device_b',
+        }
+    )
+    location_b = DynamicModelChoiceField(
+        queryset=Location.objects.all(),
+        query_params={
+            'site_id': '$site_b',
+        },
+        required=False,
+        label=_('Location'),
+        initial_params={
+            'devices': '$device_b',
+        }
+    )
+    device_b = DynamicModelChoiceField(
+        queryset=Device.objects.all(),
+        query_params={
+            'site_id': '$site_b',
+            'location_id': '$location_b',
+        },
+        required=False,
+        label=_('Device'),
+        initial_params={
+            'interfaces': '$interface_b'
+        }
+    )
+    interface_b = DynamicModelChoiceField(
+        queryset=Interface.objects.all(),
+        query_params={
+#            'kind': 'virtual',
+            'device_id': '$device_b',
+        },
+        disabled_indicator='_occupied',
+        label=_('Interface')
+    )
+    comments = CommentField()
+
+    fieldsets = (
+        ('Side A', ('site_a', 'location_a', 'device_a', 'interface_a')),
+        ('Side B', ('site_b', 'location_b', 'device_b', 'interface_b')),
+        ('Link', ('status', 'description', 'tags')),
+        ('Tenancy', ('tenant_group', 'tenant')),
+    )
+
+    class Meta:
+        model = WirelessLink
+        fields = [
+            'site_a', 'location_a', 'device_a', 'interface_a', 'site_b', 'location_b', 'device_b', 'interface_b',
+            'status', 'tenant_group', 'tenant', 'description', 'comments', 'tags',
         ]

@@ -2229,3 +2229,59 @@ class VirtualDeviceContextTest(APIViewTestCases.APIViewTestCase):
                 'identifier': 3,
             },
         ]
+
+class VirtualLinkTest(APIViewTestCases.APIViewTestCase):
+    model = VirtualLink
+    brief_fields = ['display', 'id', 'url']
+    bulk_update_data = {
+        'status': 'planned',
+    }
+
+
+#### Need to change up ifaces
+
+    @classmethod
+    def setUpTestData(cls):
+        device = create_test_device('test-device')
+        interfaces = [
+            Interface(
+                device=device,
+                name=f'radio{i}',
+                type=InterfaceTypeChoices.TYPE_80211AC,
+                rf_channel=WirelessChannelChoices.CHANNEL_5G_32,
+                rf_channel_frequency=5160,
+                rf_channel_width=20
+            ) for i in range(12)
+        ]
+        Interface.objects.bulk_create(interfaces)
+
+        tenants = (
+            Tenant(name='Tenant 1', slug='tenant-1'),
+            Tenant(name='Tenant 2', slug='tenant-2'),
+        )
+        Tenant.objects.bulk_create(tenants)
+
+        virtual_links = (
+            VirtualLink(ssid='LINK1', interface_a=interfaces[0], interface_b=interfaces[1], tenant=tenants[0]),
+            VirtualLink(ssid='LINK2', interface_a=interfaces[2], interface_b=interfaces[3], tenant=tenants[0]),
+            VirtualLink(ssid='LINK3', interface_a=interfaces[4], interface_b=interfaces[5], tenant=tenants[0]),
+        )
+        VirtualLink.objects.bulk_create(virtual_links)
+
+        cls.create_data = [
+            {
+                'interface_a': interfaces[6].pk,
+                'interface_b': interfaces[7].pk,
+                'tenant': tenants[1].pk,
+            },
+            {
+                'interface_a': interfaces[8].pk,
+                'interface_b': interfaces[9].pk,
+                'tenant': tenants[1].pk,
+            },
+            {
+                'interface_a': interfaces[10].pk,
+                'interface_b': interfaces[11].pk,
+                'tenant': tenants[1].pk,
+            },
+        ]

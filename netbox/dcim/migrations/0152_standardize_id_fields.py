@@ -271,4 +271,9 @@ class Migration(migrations.Migration):
             name='_link_peer_id',
             field=models.PositiveBigIntegerField(blank=True, null=True),
         ),
+        migrations.AlterField(
+            model_name='virtuallink',
+            name='id',
+            field=models.BigAutoField(auto_created=True, primary_key=True, serialize=False),
+        ),
     ]

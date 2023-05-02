@@ -54,7 +54,8 @@ __all__ = (
     'SiteBulkEditForm',
     'SiteGroupBulkEditForm',
     'VirtualChassisBulkEditForm',
-    'VirtualDeviceContextBulkEditForm'
+    'VirtualDeviceContextBulkEditForm',
+    'VirtualLinkBulkEditForm'
 )
 
 
@@ -1422,3 +1423,29 @@ class VirtualDeviceContextBulkEditForm(NetBoxModelBulkEditForm):
         (None, ('device', 'status', 'tenant')),
     )
     nullable_fields = ('device', 'tenant', )
+
+
+class VirtualLinkBulkEditForm(NetBoxModelBulkEditForm):
+    status = forms.ChoiceField(
+        choices=add_blank_choice(LinkStatusChoices),
+        required=False
+    )
+    tenant = DynamicModelChoiceField(
+        queryset=Tenant.objects.all(),
+        required=False
+    )
+    description = forms.CharField(
+        max_length=200,
+        required=False
+    )
+    comments = CommentField(
+        label='Comments'
+    )
+
+    model = WirelessLink
+    fieldsets = (
+        (None, ('status', 'tenant', 'description'))
+    )
+    nullable_fields = (
+        'tenant', 'description', 'comments',
+    )

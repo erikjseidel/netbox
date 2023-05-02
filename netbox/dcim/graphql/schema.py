@@ -247,3 +247,9 @@ class DCIMQuery(graphene.ObjectType):
 
     def resolve_virtual_device_context_list(root, info, **kwargs):
         return gql_query_optimizer(models.VirtualDeviceContext.objects.all(), info)
+
+    virtual_link = ObjectField(VirtualLinkType)
+    virtual_link_list = ObjectListField(VirtualLinkType)
+
+    def resolve_virtual_link_list(root, info, **kwargs):
+        return gql_query_optimizer(models.VirtualLink.objects.all(), info)

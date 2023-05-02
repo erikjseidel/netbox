@@ -30,6 +30,7 @@ __all__ = (
     'ConsoleServerPort',
     'DeviceBay',
     'FrontPort',
+    'VirtualLink',
     'Interface',
     'InventoryItem',
     'InventoryItemRole',
@@ -124,6 +125,93 @@ class ModularComponentModel(ComponentModel):
 
     class Meta(ComponentModel.Meta):
         abstract = True
+
+
+class VirtualLink(PrimaryModel):
+    """
+    A point-to-point connection between two Interfaces.
+    """
+    interface_a = models.ForeignKey(
+        to='dcim.Interface',
+#        limit_choices_to=get_wireless_interface_types,
+        on_delete=models.PROTECT,
+        related_name='+',
+        verbose_name="Interface A",
+    )
+    interface_b = models.ForeignKey(
+        to='dcim.Interface',
+#        limit_choices_to=get_wireless_interface_types,
+        on_delete=models.PROTECT,
+        related_name='+',
+        verbose_name="Interface B",
+    )
+    status = models.CharField(
+        max_length=50,
+        choices=LinkStatusChoices,
+        default=LinkStatusChoices.STATUS_CONNECTED
+    )
+    tenant = models.ForeignKey(
+        to='tenancy.Tenant',
+        on_delete=models.PROTECT,
+        related_name='virtual_links',
+        blank=True,
+        null=True
+    )
+
+    # Cache the associated device for the A and B interfaces. This enables filtering of WirelessLinks by their
+    # associated Devices.
+    _interface_a_device = models.ForeignKey(
+        to='dcim.Device',
+        on_delete=models.CASCADE,
+        related_name='+',
+        blank=True,
+        null=True
+    )
+    _interface_b_device = models.ForeignKey(
+        to='dcim.Device',
+        on_delete=models.CASCADE,
+        related_name='+',
+        blank=True,
+        null=True
+    )
+
+    class Meta:
+        ordering = ['pk']
+        constraints = (
+            models.UniqueConstraint(
+                fields=('interface_a', 'interface_b'),
+                name='%(app_label)s_%(class)s_unique_interfaces'
+            ),
+        )
+
+    def __str__(self):
+        return self.ssid or f'#{self.pk}'
+
+    def get_absolute_url(self):
+        return reverse('dcim:virtuallink', args=[self.pk])
+
+    def get_status_color(self):
+        return LinkStatusChoices.colors.get(self.status)
+
+    def clean(self):
+
+        # Validate interface types
+        if self.interface_a.type in WIRELESS_IFACE_TYPES:
+            raise ValidationError({
+                'interface_a': f"{self.interface_a.get_type_display()} is a wireless interface."
+            })
+        if self.interface_b.type in WIRELESS_IFACE_TYPES:
+            raise ValidationError({
+                'interface_a': f"{self.interface_b.get_type_display()} is a wireless interface."
+            })
+
+    def save(self, *args, **kwargs):
+
+        # Store the parent Device for the A and B interfaces
+        self._interface_a_device = self.interface_a.device
+        self._interface_b_device = self.interface_b.device
+
+        super().save(*args, **kwargs)
 
 
 class CabledObjectModel(models.Model):
@@ -632,6 +720,13 @@ class Interface(ModularComponentModel, BaseInterface, CabledObjectModel, PathEnd
         blank=True,
         verbose_name='PoE type'
     )
+    virtual_link = models.ForeignKey(
+        to='dcim.VirtualLink',
+        on_delete=models.SET_NULL,
+        related_name='+',
+        blank=True,
+        null=True
+    )
     wireless_link = models.ForeignKey(
         to='wireless.WirelessLink',
         on_delete=models.SET_NULL,
@@ -825,7 +920,7 @@ class Interface(ModularComponentModel, BaseInterface, CabledObjectModel, PathEnd
 
     @property
     def _occupied(self):
-        return super()._occupied or bool(self.wireless_link_id)
+        return super()._occupied or bool(self.wireless_link_id) or bool(self.virtual_link_id)
 
     @property
     def is_wired(self):
@@ -849,18 +944,23 @@ class Interface(ModularComponentModel, BaseInterface, CabledObjectModel, PathEnd
 
     @property
     def link(self):
-        return self.cable or self.wireless_link
+        return self.cable or self.wireless_link or self.virtual_link
 
     @cached_property
     def link_peers(self):
         if self.cable:
             return super().link_peers
+        # Return the opposite side of the attached wireless or virtual link
         if self.wireless_link:
-            # Return the opposite side of the attached wireless link
             if self.wireless_link.interface_a == self:
                 return [self.wireless_link.interface_b]
             else:
                 return [self.wireless_link.interface_a]
+        if self.virtual_link:
+            if self.virtual_link.interface_a == self:
+                return [self.virtual_link.interface_b]
+            else:
+                return [self.virtual_link.interface_a]
         return []
 
     @property

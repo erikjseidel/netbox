@@ -35,6 +35,14 @@ class ConsoleServerPortIndex(SearchIndex):
 
 
 @register_search
+class VirtualLinkIndex(SearchIndex):
+    model = models.VirtualLink
+    fields = (
+        ('description', 500),
+        ('comments', 5000),
+    )
+
+@register_search
 class DeviceIndex(SearchIndex):
     model = models.Device
     fields = (

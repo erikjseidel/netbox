@@ -10,6 +10,7 @@ from timezone_field.rest_framework import TimeZoneSerializerField
 from dcim.choices import *
 from dcim.constants import *
 from dcim.models import *
+from dcim.api.nested_serializers import NestedVirtualLinkSerializer
 from extras.api.nested_serializers import NestedConfigTemplateSerializer
 from ipam.api.nested_serializers import (
     NestedASNSerializer, NestedIPAddressSerializer, NestedL2VPNTerminationSerializer, NestedVLANSerializer,
@@ -895,6 +896,7 @@ class InterfaceSerializer(NetBoxModelSerializer, CabledObjectSerializer, Connect
     )
     vrf = NestedVRFSerializer(required=False, allow_null=True)
     l2vpn_termination = NestedL2VPNTerminationSerializer(read_only=True, allow_null=True)
+    virtual_link = NestedVirtualLinkSerializer(read_only=True, allow_null=True)
     wireless_link = NestedWirelessLinkSerializer(read_only=True, allow_null=True)
     wireless_lans = SerializedPKRelatedField(
         queryset=WirelessLAN.objects.all(),
@@ -913,7 +915,7 @@ class InterfaceSerializer(NetBoxModelSerializer, CabledObjectSerializer, Connect
             'id', 'url', 'display', 'device', 'vdcs', 'module', 'name', 'label', 'type', 'enabled', 'parent', 'bridge',
             'lag', 'mtu', 'mac_address', 'speed', 'duplex', 'wwn', 'mgmt_only', 'description', 'mode', 'rf_role',
             'rf_channel', 'poe_mode', 'poe_type', 'rf_channel_frequency', 'rf_channel_width', 'tx_power',
-            'untagged_vlan', 'tagged_vlans', 'mark_connected', 'cable', 'cable_end', 'wireless_link', 'link_peers',
+            'untagged_vlan', 'tagged_vlans', 'mark_connected', 'cable', 'cable_end', 'wireless_link', 'virtual_link', 'link_peers',
             'link_peers_type', 'wireless_lans', 'vrf', 'l2vpn_termination', 'connected_endpoints',
             'connected_endpoints_type', 'connected_endpoints_reachable', 'tags', 'custom_fields', 'created',
             'last_updated', 'count_ipaddresses', 'count_fhrp_groups', '_occupied',
@@ -1196,4 +1198,19 @@ class PowerFeedSerializer(NetBoxModelSerializer, CabledObjectSerializer, Connect
             'amperage', 'max_utilization', 'mark_connected', 'cable', 'cable_end', 'link_peers', 'link_peers_type',
             'connected_endpoints', 'connected_endpoints_type', 'connected_endpoints_reachable', 'description',
             'comments', 'tags', 'custom_fields', 'created', 'last_updated', '_occupied',
+        ]
+
+
+class VirtualLinkSerializer(NetBoxModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='dcim-api:virtuallink-detail')
+    status = ChoiceField(choices=LinkStatusChoices, required=False)
+    interface_a = NestedInterfaceSerializer()
+    interface_b = NestedInterfaceSerializer()
+    tenant = NestedTenantSerializer(required=False, allow_null=True)
+
+    class Meta:
+        model = VirtualLink
+        fields = [
+            'id', 'url', 'display', 'interface_a', 'interface_b', 'status', 'tenant',
+            'description', 'comments', 'tags', 'custom_fields', 'created', 'last_updated',
         ]

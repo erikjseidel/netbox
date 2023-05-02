@@ -71,6 +71,8 @@ class Command(BaseCommand):
             params = Q(cable__isnull=False)
             if hasattr(model, 'wireless_link'):
                 params |= Q(wireless_link__isnull=False)
+            if hasattr(model, 'virtual_link'):
+                params |= Q(virtual_link__isnull=False)
             origins = model.objects.filter(params)
             if not options['force']:
                 origins = origins.filter(_path__isnull=True)

@@ -12,6 +12,7 @@ from django.urls import reverse
 from dcim.choices import *
 from dcim.constants import *
 from dcim.fields import PathField
+from dcim.models import VirtualLink
 from dcim.utils import decompile_path_node, object_to_path_node
 from netbox.models import ChangeLoggedModel, PrimaryModel
 
@@ -517,7 +518,7 @@ class CablePath(models.Model):
             elif link is None:
                 # Otherwise, halt the trace if no link exists
                 break
-            assert type(link) in (Cable, WirelessLink)
+            assert type(link) in (Cable, WirelessLink, VirtualLink)
 
             # Step 3: Record the link and update path status if not "connected"
             path.append([object_to_path_node(link)])
@@ -540,7 +541,7 @@ class CablePath(models.Model):
                 )
                 remote_terminations = [ct.termination for ct in remote_cable_terminations]
             else:
-                # WirelessLink
+                # WirelessLink or VirtualLink
                 remote_terminations = [link.interface_b] if link.interface_a is terminations[0] else [link.interface_a]
 
             # Step 5: Record the far-end termination object(s)

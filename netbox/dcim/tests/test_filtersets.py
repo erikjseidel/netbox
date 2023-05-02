@@ -4437,3 +4437,79 @@ class VirtualDeviceContextTestCase(TestCase, ChangeLoggedFilterSetTests):
         self.assertEqual(self.filterset(params, self.queryset).qs.count(), 2)
         params = {'has_primary_ip': False}
         self.assertEqual(self.filterset(params, self.queryset).qs.count(), 4)
+
+
+class VirtualLinkTestCase(TestCase, ChangeLoggedFilterSetTests):
+    queryset = VirtualLink.objects.all()
+    filterset = VirtualLinkFilterSet
+
+    @classmethod
+    def setUpTestData(cls):
+
+        tenants = (
+            Tenant(name='Tenant 1', slug='tenant-1'),
+            Tenant(name='Tenant 2', slug='tenant-2'),
+            Tenant(name='Tenant 3', slug='tenant-3'),
+        )
+        Tenant.objects.bulk_create(tenants)
+
+        devices = (
+            create_test_device('device1'),
+            create_test_device('device2'),
+            create_test_device('device3'),
+            create_test_device('device4'),
+        )
+
+        interfaces = (
+            Interface(device=devices[0], name='Interface 1', type=InterfaceTypeChoices.TYPE_80211AC),
+            Interface(device=devices[0], name='Interface 2', type=InterfaceTypeChoices.TYPE_80211AC),
+            Interface(device=devices[1], name='Interface 3', type=InterfaceTypeChoices.TYPE_80211AC),
+            Interface(device=devices[1], name='Interface 4', type=InterfaceTypeChoices.TYPE_80211AC),
+            Interface(device=devices[2], name='Interface 5', type=InterfaceTypeChoices.TYPE_80211AC),
+            Interface(device=devices[2], name='Interface 6', type=InterfaceTypeChoices.TYPE_80211AC),
+            Interface(device=devices[3], name='Interface 7', type=InterfaceTypeChoices.TYPE_80211AC),
+            Interface(device=devices[3], name='Interface 8', type=InterfaceTypeChoices.TYPE_80211AC),
+        )
+        Interface.objects.bulk_create(interfaces)
+
+        # Virtual links
+        VirtualLink(
+            interface_a=interfaces[0],
+            interface_b=interfaces[2],
+            status=LinkStatusChoices.STATUS_CONNECTED,
+            tenant=tenants[0],
+            description='foobar1'
+        ).save()
+        VirtualLink(
+            interface_a=interfaces[1],
+            interface_b=interfaces[3],
+            status=LinkStatusChoices.STATUS_PLANNED,
+            tenant=tenants[1],
+            description='foobar2'
+        ).save()
+        VirtualLink(
+            interface_a=interfaces[4],
+            interface_b=interfaces[6],
+            status=LinkStatusChoices.STATUS_DECOMMISSIONING,
+            tenant=tenants[2],
+        ).save()
+        VirtualLink(
+            interface_a=interfaces[5],
+            interface_b=interfaces[7],
+            ssid='LINK4'
+        ).save()
+
+    def test_status(self):
+        params = {'status': [LinkStatusChoices.STATUS_PLANNED, LinkStatusChoices.STATUS_DECOMMISSIONING]}
+        self.assertEqual(self.filterset(params, self.queryset).qs.count(), 2)
+
+    def test_description(self):
+        params = {'description': ['foobar1', 'foobar2']}
+        self.assertEqual(self.filterset(params, self.queryset).qs.count(), 2)
+
+    def test_tenant(self):
+        tenants = Tenant.objects.all()[:2]
+        params = {'tenant_id': [tenants[0].pk, tenants[1].pk]}
+        self.assertEqual(self.filterset(params, self.queryset).qs.count(), 2)
+        params = {'tenant': [tenants[0].slug, tenants[1].slug]}
+        self.assertEqual(self.filterset(params, self.queryset).qs.count(), 2)

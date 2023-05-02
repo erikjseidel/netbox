@@ -6,6 +6,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('dcim', '0161_cabling_cleanup'),
+        ('dcim', '0172_virtuallink_interface_types'),
     ]
 
     operations = [
@@ -139,6 +140,10 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='rearporttemplate',
+            unique_together=set(),
+        ),
+        migrations.AlterUniqueTogether(
+            name='virtuallink',
             unique_together=set(),
         ),
         migrations.AddConstraint(
@@ -328,5 +333,9 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name='sitegroup',
             constraint=models.UniqueConstraint(condition=models.Q(('parent__isnull', True)), fields=('slug',), name='dcim_sitegroup_slug', violation_error_message='A top-level site group with this slug already exists.'),
+        ),
+        migrations.AddConstraint(
+            model_name='virtuallink',
+            constraint=models.UniqueConstraint(fields=('interface_a', 'interface_b'), name='dcim_virtuallink_unique_interfaces'),
         ),
     ]

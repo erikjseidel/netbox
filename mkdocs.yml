@@ -205,6 +205,7 @@ nav:
             - SiteGroup: 'models/dcim/sitegroup.md'
             - VirtualChassis: 'models/dcim/virtualchassis.md'
             - VirtualDeviceContext: 'models/dcim/virtualdevicecontext.md'
+            - VirtualLink: 'models/dcim/virtuallink.md'
         - Extras:
             - Branch: 'models/extras/branch.md'
             - ConfigContext: 'models/extras/configcontext.md'

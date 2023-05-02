@@ -661,4 +661,24 @@ class Migration(migrations.Migration):
                 'ordering': ['name'],
             },
         ),
+        migrations.CreateModel(
+            name='VirtualLink',
+            fields=[
+                ('created', models.DateField(auto_now_add=True, null=True)),
+                ('last_updated', models.DateTimeField(auto_now=True, null=True)),
+                ('custom_field_data', models.JSONField(blank=True, default=dict, encoder=CustomFieldJSONEncoder)),
+                ('id', models.BigAutoField(primary_key=True, serialize=False)),
+                ('status', models.CharField(default='connected', max_length=50)),
+                ('description', models.CharField(blank=True, max_length=200)),
+                ('_interface_a_device', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='dcim.device')),
+                ('_interface_b_device', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='dcim.device')),
+                ('interface_a', models.ForeignKey(limit_choices_to={'type__in': ['ieee802.11a', 'ieee802.11g', 'ieee802.11n', 'ieee802.11ac', 'ieee802.11ad', 'ieee802.11ax']}, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='dcim.interface')),
+                ('interface_b', models.ForeignKey(limit_choices_to={'type__in': ['ieee802.11a', 'ieee802.11g', 'ieee802.11n', 'ieee802.11ac', 'ieee802.11ad', 'ieee802.11ax']}, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='dcim.interface')),
+                ('tags', taggit.managers.TaggableManager(through='extras.TaggedItem', to='extras.Tag')),
+            ],
+            options={
+                'ordering': ['pk'],
+                'unique_together': {('interface_a', 'interface_b')},
+            },
+        ),
     ]

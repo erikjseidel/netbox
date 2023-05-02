@@ -671,3 +671,9 @@ class ConnectedDeviceViewSet(ViewSet):
 
         # Connected endpoint is none or not an Interface
         raise Http404
+
+
+class VirtualLinkViewSet(NetBoxModelViewSet):
+    queryset = VirtualLink.objects.prefetch_related('interface_a', 'interface_b', 'tenant', 'tags')
+    serializer_class = serializers.VirtualLinkSerializer
+    filterset_class = filtersets.VirtualLinkFilterSet
