@@ -1,8 +1,8 @@
 import django_tables2 as tables
 
+from dcim.models import *
 from netbox.tables import NetBoxTable, columns
 from tenancy.tables import TenancyColumnsMixin
-from wireless.models import *
 
 __all__ = (
     'VirtualLinkTable',
