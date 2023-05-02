@@ -50,7 +50,8 @@ __all__ = (
     'SiteImportForm',
     'SiteGroupImportForm',
     'VirtualChassisImportForm',
-    'VirtualDeviceContextImportForm'
+    'VirtualDeviceContextImportForm',
+    'VirtualLinkImportForm',
 )
 
 
@@ -1215,3 +1216,28 @@ class VirtualDeviceContextImportForm(NetBoxModelImportForm):
             'name', 'device', 'status', 'tenant', 'identifier', 'comments',
         ]
         model = VirtualDeviceContext
+
+
+class VirtualLinkImportForm(NetBoxModelImportForm):
+    status = CSVChoiceField(
+        choices=LinkStatusChoices,
+        help_text=_('Connection status')
+    )
+    interface_a = CSVModelChoiceField(
+        queryset=Interface.objects.all()
+    )
+    interface_b = CSVModelChoiceField(
+        queryset=Interface.objects.all()
+    )
+    tenant = CSVModelChoiceField(
+        queryset=Tenant.objects.all(),
+        required=False,
+        to_field_name='name',
+        help_text=_('Assigned tenant')
+    )
+
+    class Meta:
+        model = VirtualLink
+        fields = (
+            'interface_a', 'interface_b', 'tenant', 'auth_psk', 'description', 'comments', 'tags',
+        )
