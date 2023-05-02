@@ -701,10 +701,10 @@ class Interface(ModularComponentModel, BaseInterface, CabledObjectModel, PathEnd
         super().clean()
 
         # Virtual Interfaces cannot have a Cable attached
-        if self.is_virtual and self.cable:
-            raise ValidationError({
-                'type': f"{self.get_type_display()} interfaces cannot have a cable attached."
-            })
+        #if self.is_virtual and self.cable:
+        #    raise ValidationError({
+        #        'type': f"{self.get_type_display()} interfaces cannot have a cable attached."
+        #    })
 
         # Virtual Interfaces cannot be marked as connected
         if self.is_virtual and self.mark_connected:
@@ -719,8 +719,8 @@ class Interface(ModularComponentModel, BaseInterface, CabledObjectModel, PathEnd
             raise ValidationError({'parent': "An interface cannot be its own parent."})
 
         # A physical interface cannot have a parent interface
-        if self.type != InterfaceTypeChoices.TYPE_VIRTUAL and self.parent is not None:
-            raise ValidationError({'parent': "Only virtual interfaces may be assigned to a parent interface."})
+        #if self.type != InterfaceTypeChoices.TYPE_VIRTUAL and self.parent is not None:
+        #    raise ValidationError({'parent': "Only virtual interfaces may be assigned to a parent interface."})
 
         # An interface's parent must belong to the same device or virtual chassis
         if self.parent and self.parent.device != self.device:
