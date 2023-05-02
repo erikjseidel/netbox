@@ -30,7 +30,6 @@ __all__ = (
     'ConsoleServerPort',
     'DeviceBay',
     'FrontPort',
-    'VirtualLink',
     'Interface',
     'InventoryItem',
     'InventoryItemRole',
@@ -39,6 +38,7 @@ __all__ = (
     'PowerOutlet',
     'PowerPort',
     'RearPort',
+    'VirtualLink',
 )
 
 

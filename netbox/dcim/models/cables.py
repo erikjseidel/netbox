@@ -19,7 +19,7 @@ from utilities.fields import ColorField
 from utilities.querysets import RestrictedQuerySet
 from utilities.utils import to_meters
 from wireless.models import WirelessLink
-from .device_components import FrontPort, RearPort
+from .device_components import FrontPort, RearPort, VirtualLink
 
 __all__ = (
     'Cable',
@@ -516,7 +516,7 @@ class CablePath(models.Model):
             elif link is None:
                 # Otherwise, halt the trace if no link exists
                 break
-            assert type(link) in (Cable, WirelessLink, models.VirtualLink)
+            assert type(link) in (Cable, WirelessLink, VirtualLink)
 
             # Step 3: Record the link and update path status if not "connected"
             path.append([object_to_path_node(link)])
