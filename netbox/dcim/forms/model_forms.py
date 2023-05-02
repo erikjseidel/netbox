@@ -1512,7 +1512,7 @@ class VirtualLinkForm(TenancyForm, NetBoxModelForm):
     )
 
     class Meta:
-        model = WirelessLink
+        model = VirtualLink
         fields = [
             'site_a', 'location_a', 'device_a', 'interface_a', 'site_b', 'location_b', 'device_b', 'interface_b',
             'status', 'tenant_group', 'tenant', 'description', 'comments', 'tags',
