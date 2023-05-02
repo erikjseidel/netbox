@@ -1239,5 +1239,5 @@ class VirtualLinkImportForm(NetBoxModelImportForm):
     class Meta:
         model = VirtualLink
         fields = (
-            'interface_a', 'interface_b', 'tenant', 'auth_psk', 'description', 'comments', 'tags',
+            'interface_a', 'interface_b', 'tenant', 'description', 'comments', 'tags',
         )
