@@ -1442,7 +1442,7 @@ class VirtualLinkBulkEditForm(NetBoxModelBulkEditForm):
         label='Comments'
     )
 
-    model = WirelessLink
+    model = VirtualLink
     fieldsets = (
         (None, ('status', 'tenant', 'description'))
     )
