@@ -175,7 +175,7 @@
           {% else %}
             <div class="text-muted">
               Not Connected
-              {% if object.is_wired and perms.dcim.add_cable %}
+              {% if (object.is_wired or object.is_virtual) and perms.dcim.add_cable %}
                 <div class="dropdown float-end">
                   <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="mdi mdi-ethernet-cable" aria-hidden="true"></span> Connect
