@@ -42,6 +42,7 @@ class VirtualLinkIndex(SearchIndex):
         ('comments', 5000),
     )
 
+
 @register_search
 class DeviceIndex(SearchIndex):
     model = models.Device

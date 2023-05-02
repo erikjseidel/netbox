@@ -1456,7 +1456,7 @@ class VirtualLinkForm(TenancyForm, NetBoxModelForm):
     interface_a = DynamicModelChoiceField(
         queryset=Interface.objects.all(),
         query_params={
-#            'kind': 'virtual',
+            # 'kind': 'virtual',
             'device_id': '$device_a',
         },
         disabled_indicator='_occupied',
@@ -1496,7 +1496,7 @@ class VirtualLinkForm(TenancyForm, NetBoxModelForm):
     interface_b = DynamicModelChoiceField(
         queryset=Interface.objects.all(),
         query_params={
-#            'kind': 'virtual',
+            # 'kind': 'virtual',
             'device_id': '$device_b',
         },
         disabled_indicator='_occupied',

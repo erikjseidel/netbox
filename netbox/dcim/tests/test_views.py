@@ -3242,7 +3242,6 @@ class VirtualDeviceContextTestCase(ViewTestCases.PrimaryObjectViewTestCase):
         }
 
 
-
 class VirtualLinkTestCase(ViewTestCases.PrimaryObjectViewTestCase):
     model = VirtualLink
 
@@ -3257,9 +3256,9 @@ class VirtualLinkTestCase(ViewTestCases.PrimaryObjectViewTestCase):
         Tenant.objects.bulk_create(tenants)
 
 
-#### Need to modify iface
         device = create_test_device('test-device')
         interfaces = [
+            # Need to modify iface
             Interface(
                 device=device,
                 name=f'radio{i}',

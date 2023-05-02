@@ -133,14 +133,14 @@ class VirtualLink(PrimaryModel):
     """
     interface_a = models.ForeignKey(
         to='dcim.Interface',
-#        limit_choices_to=get_wireless_interface_types,
+        # limit_choices_to=get_wireless_interface_types,
         on_delete=models.PROTECT,
         related_name='+',
         verbose_name="Interface A",
     )
     interface_b = models.ForeignKey(
         to='dcim.Interface',
-#        limit_choices_to=get_wireless_interface_types,
+        # limit_choices_to=get_wireless_interface_types,
         on_delete=models.PROTECT,
         related_name='+',
         verbose_name="Interface B",

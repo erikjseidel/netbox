@@ -195,6 +195,7 @@ class PathTraceView(generic.ObjectView):
 # Virtual Links
 #
 
+
 class VirtualLinkListView(generic.ObjectListView):
     queryset = VirtualLink.objects.all()
     filterset = filtersets.VirtualLinkFilterSet
@@ -238,6 +239,7 @@ class VirtualLinkBulkDeleteView(generic.BulkDeleteView):
 #
 # Regions
 #
+
 
 class RegionListView(generic.ObjectListView):
     queryset = Region.objects.add_related_count(

@@ -75,7 +75,7 @@ class Migration(migrations.Migration):
             name='description',
             field=models.CharField(blank=True, max_length=200),
         ),
-         migrations.AddField(
+        migrations.AddField(
             model_name='virtuallink',
             name='comments',
             field=models.TextField(blank=True),

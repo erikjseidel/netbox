@@ -2230,6 +2230,7 @@ class VirtualDeviceContextTest(APIViewTestCases.APIViewTestCase):
             },
         ]
 
+
 class VirtualLinkTest(APIViewTestCases.APIViewTestCase):
     model = VirtualLink
     brief_fields = ['display', 'id', 'url']
@@ -2237,13 +2238,11 @@ class VirtualLinkTest(APIViewTestCases.APIViewTestCase):
         'status': 'planned',
     }
 
-
-#### Need to change up ifaces
-
     @classmethod
     def setUpTestData(cls):
         device = create_test_device('test-device')
         interfaces = [
+            # Need to change up ifaces
             Interface(
                 device=device,
                 name=f'radio{i}',

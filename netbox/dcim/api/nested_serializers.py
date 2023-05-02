@@ -518,5 +518,6 @@ class NestedVirtualDeviceContextSerializer(WritableNestedSerializer):
 
 class NestedVirtualLinkSerializer(WritableNestedSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='dcim-api:virtuallink-detail')
+
     class Meta:
         model = VirtalLink
