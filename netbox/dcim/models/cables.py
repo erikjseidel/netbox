@@ -303,9 +303,9 @@ class CableTermination(ChangeLoggedModel):
                 f"{self.termination_id}: cable {existing_termination.cable.pk}"
             )
 
-        # Validate interface type (if applicable)
-        if self.termination_type.model == 'interface' and self.termination.type in NONCONNECTABLE_IFACE_TYPES:
-            raise ValidationError(f"Cables cannot be terminated to {self.termination.get_type_display()} interfaces")
+        #Validate interface type (if applicable)
+        #if self.termination_type.model == 'interface' and self.termination.type in NONCONNECTABLE_IFACE_TYPES:
+        #    raise ValidationError(f"Cables cannot be terminated to {self.termination.get_type_display()} interfaces")
 
         # A CircuitTermination attached to a ProviderNetwork cannot have a Cable
         if self.termination_type.model == 'circuittermination' and self.termination.provider_network is not None:
