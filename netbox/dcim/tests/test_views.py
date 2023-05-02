@@ -3255,7 +3255,6 @@ class VirtualLinkTestCase(ViewTestCases.PrimaryObjectViewTestCase):
         )
         Tenant.objects.bulk_create(tenants)
 
-
         device = create_test_device('test-device')
         interfaces = [
             # Need to modify iface
