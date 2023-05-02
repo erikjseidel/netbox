@@ -3,7 +3,8 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext as _
 
 from circuits.models import Circuit
-from dcim.models import VirtualLink, Cable, Device, Location, Rack, RackReservation, Site, VirtualDeviceContext
+from dcim.models import Cable, Device, Location, Rack, RackReservation, Site, VirtualDeviceContext
+from dcim.models.device_components import VirtualLink
 from ipam.models import Aggregate, ASN, IPAddress, IPRange, L2VPN, Prefix, VLAN, VRF
 from netbox.views import generic
 from utilities.utils import count_related

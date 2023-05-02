@@ -12,7 +12,7 @@ from django.urls import reverse
 from dcim.choices import *
 from dcim.constants import *
 from dcim.fields import PathField
-from dcim.models import VirtualLink
+from dcim.models.device_components import VirtualLink
 from dcim.utils import decompile_path_node, object_to_path_node
 from netbox.models import ChangeLoggedModel, PrimaryModel
 
