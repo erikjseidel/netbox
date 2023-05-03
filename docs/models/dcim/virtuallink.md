@@ -1,6 +1,6 @@
 # Virtual Links
 
-A virtual link represents a connection between exactly two interfaces. It is somewhat analogous to, and indeed intends to replicate, a "graph edge" found in graph databases, thus allowing for more flexibility in networks.
+A virtual link represents a connection between exactly two interfaces. It is somewhat analogous to, and indeed intends to replicate, a "graph edge" found in graph databases, thus allowing for more flexibility in modelling overlay and hybrid networks.
 
 ## Fields
 
