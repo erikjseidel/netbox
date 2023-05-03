@@ -4491,12 +4491,11 @@ class VirtualLinkTestCase(TestCase, ChangeLoggedFilterSetTests):
             interface_a=interfaces[4],
             interface_b=interfaces[6],
             status=LinkStatusChoices.STATUS_DECOMMISSIONING,
-            tenant=tenants[2],
+            tenant=tenants[2]
         ).save()
         VirtualLink(
             interface_a=interfaces[5],
             interface_b=interfaces[7],
-            ssid='LINK4'
         ).save()
 
     def test_status(self):

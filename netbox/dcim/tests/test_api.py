@@ -2262,9 +2262,9 @@ class VirtualLinkTest(APIViewTestCases.APIViewTestCase):
         Tenant.objects.bulk_create(tenants)
 
         virtual_links = (
-            VirtualLink(ssid='LINK1', interface_a=interfaces[0], interface_b=interfaces[1], tenant=tenants[0]),
-            VirtualLink(ssid='LINK2', interface_a=interfaces[2], interface_b=interfaces[3], tenant=tenants[0]),
-            VirtualLink(ssid='LINK3', interface_a=interfaces[4], interface_b=interfaces[5], tenant=tenants[0]),
+            VirtualLink(interface_a=interfaces[0], interface_b=interfaces[1], tenant=tenants[0]),
+            VirtualLink(interface_a=interfaces[2], interface_b=interfaces[3], tenant=tenants[0]),
+            VirtualLink(interface_a=interfaces[4], interface_b=interfaces[5], tenant=tenants[0]),
         )
         VirtualLink.objects.bulk_create(virtual_links)
 

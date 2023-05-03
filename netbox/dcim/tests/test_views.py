@@ -3270,11 +3270,11 @@ class VirtualLinkTestCase(ViewTestCases.PrimaryObjectViewTestCase):
         ]
         Interface.objects.bulk_create(interfaces)
 
-        virtuallink1 = VirtualLink(interface_a=interfaces[0], interface_b=interfaces[1], ssid='LINK1', tenant=tenants[0])
+        virtuallink1 = VirtualLink(interface_a=interfaces[0], interface_b=interfaces[1], tenant=tenants[0])
         virtuallink1.save()
-        virtuallink2 = VirtualLink(interface_a=interfaces[2], interface_b=interfaces[3], ssid='LINK2', tenant=tenants[0])
+        virtuallink2 = VirtualLink(interface_a=interfaces[2], interface_b=interfaces[3], tenant=tenants[0])
         virtuallink2.save()
-        virtuallink3 = VirtualLink(interface_a=interfaces[4], interface_b=interfaces[5], ssid='LINK3', tenant=tenants[0])
+        virtuallink3 = VirtualLink(interface_a=interfaces[4], interface_b=interfaces[5], tenant=tenants[0])
         virtuallink3.save()
 
         tags = create_tags('Alpha', 'Bravo', 'Charlie')
