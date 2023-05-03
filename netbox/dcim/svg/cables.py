@@ -273,7 +273,7 @@ class CableTraceSVG:
         start = (OFFSET + self.center, self.cursor)
         height = PADDING * 2 + LINE_HEIGHT * len(labels) + PADDING * 2
         end = (start[0], start[1] + height)
-        line = Line(start=start, end=end, class_='virtual-link')
+        line = Line(start=start, end=end, class_='wireless-link')
         group.add(line)
 
         self.cursor += PADDING * 2
