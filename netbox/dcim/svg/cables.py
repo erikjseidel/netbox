@@ -258,9 +258,9 @@ class CableTraceSVG:
 
         return connector
 
-    def draw_virtallink(self, virtuallink):
+    def draw_virtuallink(self, virtuallink):
         """
-        Draw a line with labels representing a WirelessLink.
+        Draw a line with labels representing a VirtualLink.
         """
         group = Group(class_='connector')
 
@@ -269,11 +269,11 @@ class CableTraceSVG:
             virtuallink.get_status_display()
         ]
 
-        # Draw the wireless link
+        # Draw the virtual link
         start = (OFFSET + self.center, self.cursor)
         height = PADDING * 2 + LINE_HEIGHT * len(labels) + PADDING * 2
         end = (start[0], start[1] + height)
-        line = Line(start=start, end=end, class_='wireless-link')  # CHANGE ME
+        line = Line(start=start, end=end, class_='virtual-link')
         group.add(line)
 
         self.cursor += PADDING * 2
