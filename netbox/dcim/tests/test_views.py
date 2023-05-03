@@ -3292,9 +3292,9 @@ class VirtualLinkTestCase(ViewTestCases.PrimaryObjectViewTestCase):
 
         cls.csv_update_data = (
             "id,description",
-            f"{virtuallink1.pk},LINK7,New decription 7",
-            f"{virtuallink2.pk},LINK8,New decription 8",
-            f"{virtuallink3.pk},LINK9,New decription 9",
+            f"{virtuallink1.pk},New decription 7",
+            f"{virtuallink2.pk},New decription 8",
+            f"{virtuallink3.pk},New decription 9",
         )
 
         cls.bulk_edit_data = {

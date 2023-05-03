@@ -19,11 +19,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='virtuallink',
             name='interface_a',
-            field=models.ForeignKey(limit_choices_to=wireless.models.get_wireless_interface_types, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='dcim.interface'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='+', to='dcim.interface'),
         ),
         migrations.AlterField(
             model_name='virtuallink',
             name='interface_b',
-            field=models.ForeignKey(limit_choices_to=wireless.models.get_wireless_interface_types, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='dcim.interface'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='+', to='dcim.interface'),
         ),
     ]
