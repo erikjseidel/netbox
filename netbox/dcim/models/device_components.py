@@ -795,6 +795,12 @@ class Interface(ModularComponentModel, BaseInterface, CabledObjectModel, PathEnd
     def clean(self):
         super().clean()
 
+        # Virtual Interfaces cannot have a Cable attached
+        if self.is_virtual and self.cable:
+            raise ValidationError({
+                'type': f"{self.get_type_display()} interfaces cannot have a cable attached."
+            })
+
         # Parent validation
 
         # An interface cannot be its own parent
