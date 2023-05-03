@@ -8,7 +8,7 @@ from .models import (
     VirtualLink, Cable, CablePath, CableTermination, Device, FrontPort, PathEndpoint, PowerPanel, Rack, Location, VirtualChassis,
 )
 from .models.cables import trace_paths
-from .models        import Interface
+from .models import Interface
 from .utils import create_cablepath, rebuild_paths
 
 
