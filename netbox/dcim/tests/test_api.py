@@ -2243,14 +2243,10 @@ class VirtualLinkTest(APIViewTestCases.APIViewTestCase):
     def setUpTestData(cls):
         device = create_test_device('test-device')
         interfaces = [
-            # Need to change up ifaces
             Interface(
                 device=device,
-                name=f'radio{i}',
-                type=InterfaceTypeChoices.TYPE_80211AC,
-                rf_channel=WirelessChannelChoices.CHANNEL_5G_32,
-                rf_channel_frequency=5160,
-                rf_channel_width=20
+                name=f'testlink{i}',
+                type=InterfaceTypeChoices.TYPE_VIRTUAL,
             ) for i in range(12)
         ]
         Interface.objects.bulk_create(interfaces)

@@ -3258,14 +3258,10 @@ class VirtualLinkTestCase(ViewTestCases.PrimaryObjectViewTestCase):
 
         device = create_test_device('test-device')
         interfaces = [
-            # Need to modify iface
             Interface(
                 device=device,
-                name=f'radio{i}',
-                type=InterfaceTypeChoices.TYPE_80211AC,
-                rf_channel=WirelessChannelChoices.CHANNEL_5G_32,
-                rf_channel_frequency=5160,
-                rf_channel_width=20
+                name=f'testlink{i}',
+                type=InterfaceTypeChoices.TYPE_VIRTUAL,
             ) for i in range(12)
         ]
         Interface.objects.bulk_create(interfaces)
@@ -3295,10 +3291,10 @@ class VirtualLinkTestCase(ViewTestCases.PrimaryObjectViewTestCase):
         )
 
         cls.csv_update_data = (
-            "id,ssid,description",
-            f"{wirelesslink1.pk},LINK7,New decription 7",
-            f"{wirelesslink2.pk},LINK8,New decription 8",
-            f"{wirelesslink3.pk},LINK9,New decription 9",
+            "id,description",
+            f"{virtuallink1.pk},LINK7,New decription 7",
+            f"{virtuallink2.pk},LINK8,New decription 8",
+            f"{virtuallink3.pk},LINK9,New decription 9",
         )
 
         cls.bulk_edit_data = {

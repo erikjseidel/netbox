@@ -4461,12 +4461,12 @@ class VirtualLinkTestCase(TestCase, ChangeLoggedFilterSetTests):
         )
 
         interfaces = (
-            Interface(device=devices[0], name='Interface 1', type=InterfaceTypeChoices.TYPE_80211AC),
-            Interface(device=devices[0], name='Interface 2', type=InterfaceTypeChoices.TYPE_80211AC),
-            Interface(device=devices[1], name='Interface 3', type=InterfaceTypeChoices.TYPE_80211AC),
-            Interface(device=devices[1], name='Interface 4', type=InterfaceTypeChoices.TYPE_80211AC),
-            Interface(device=devices[2], name='Interface 5', type=InterfaceTypeChoices.TYPE_80211AC),
-            Interface(device=devices[2], name='Interface 6', type=InterfaceTypeChoices.TYPE_80211AC),
+            Interface(device=devices[0], name='Interface 1', type=InterfaceTypeChoices.TYPE_VIRTUAL),
+            Interface(device=devices[0], name='Interface 2', type=InterfaceTypeChoices.TYPE_VIRTUAL),
+            Interface(device=devices[1], name='Interface 3', type=InterfaceTypeChoices.TYPE_OTHER),
+            Interface(device=devices[1], name='Interface 4', type=InterfaceTypeChoices.TYPE_OTHER),
+            Interface(device=devices[2], name='Interface 5', type=InterfaceTypeChoices.TYPE_LAG),
+            Interface(device=devices[2], name='Interface 6', type=InterfaceTypeChoices.TYPE_1GE_FIXED),
             Interface(device=devices[3], name='Interface 7', type=InterfaceTypeChoices.TYPE_80211AC),
             Interface(device=devices[3], name='Interface 8', type=InterfaceTypeChoices.TYPE_80211AC),
         )
