@@ -6,7 +6,7 @@ A virtual link represents a connection between exactly two interfaces. It is som
 
 ### Interfaces
 
-Select two interfaces: One for side A and one for side B. (Both must be wireless interfaces.)
+Select two interfaces: One for side A and one for side B. (Both must be virtual interfaces.)
 
 ### Status
 
