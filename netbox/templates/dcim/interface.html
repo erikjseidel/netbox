@@ -136,7 +136,6 @@
           </table>
         </div>
       </div>
-
       <div class="card">
         <h5 class="card-header">Connection</h5>
         <div class="card-body">
@@ -201,35 +200,33 @@
           {% else %}
             <div class="text-muted">
               Not Connected
-	      {% if object.is_wired or object.is_virtual %}
-	        {% if perms.dcim.add_cable %}
-                  <div class="dropdown float-end">
-                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="mdi mdi-ethernet-cable" aria-hidden="true"></span> Connect
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                      <li>
-                        <a class="dropdown-item" href="{% url 'dcim:cable_add' %}?a_terminations_type=dcim.interface&a_terminations={{ object.pk }}&b_terminations_type=dcim.interface&return_url={{ object.get_absolute_url }}">Interface</a>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="{% url 'dcim:cable_add' %}?a_terminations_type=dcim.interface&a_terminations={{ object.pk }}&b_terminations_type=dcim.frontport&return_url={{ object.get_absolute_url }}">Front Port</a>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="{% url 'dcim:cable_add' %}?a_terminations_type=dcim.interface&a_terminations={{ object.pk }}&b_terminations_type=dcim.rearport&return_url={{ object.get_absolute_url }}">Rear Port</a>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="{% url 'dcim:cable_add' %}?a_terminations_type=dcim.interface&a_terminations={{ object.pk }}&b_terminations_type=circuits.circuittermination&return_url={{ object.get_absolute_url }}">Circuit Termination</a>
-                      </li>
-                    </ul>
-                  </div>
-		{% endif %}
+	      {% if object.is_wired and not object.is_virtual and perms.dcim.add_cable %}
+                <div class="dropdown float-end">
+                  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="mdi mdi-ethernet-cable" aria-hidden="true"></span> Connect
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="{% url 'dcim:cable_add' %}?a_terminations_type=dcim.interface&a_terminations={{ object.pk }}&b_terminations_type=dcim.interface&return_url={{ object.get_absolute_url }}">Interface</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'dcim:cable_add' %}?a_terminations_type=dcim.interface&a_terminations={{ object.pk }}&b_terminations_type=dcim.frontport&return_url={{ object.get_absolute_url }}">Front Port</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'dcim:cable_add' %}?a_terminations_type=dcim.interface&a_terminations={{ object.pk }}&b_terminations_type=dcim.rearport&return_url={{ object.get_absolute_url }}">Rear Port</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'dcim:cable_add' %}?a_terminations_type=dcim.interface&a_terminations={{ object.pk }}&b_terminations_type=circuits.circuittermination&return_url={{ object.get_absolute_url }}">Circuit Termination</a>
+                    </li>
+                  </ul>
+                </div>
               {% elif object.is_wireless and perms.wireless.add_wirelesslink %}
                 <div class="dropdown float-end">
                   <a href="{% url 'wireless:wirelesslink_add' %}?interface_a={{ object.pk }}&return_url={{ object.get_absolute_url }}" class="btn btn-primary btn-sm">
                     <span class="mdi mdi-wifi-plus" aria-hidden="true"></span> Connect
                   </a>
                 </div>
-              {% elif perms.dcim.add_virtuallink %}
+	      {% elif object.is_virtual and perms.dcim.add_virtuallink %}
                 <div class="dropdown float-end">
                   <a href="{% url 'dcim:virtuallink_add' %}?interface_a={{ object.pk }}&return_url={{ object.get_absolute_url }}" class="btn btn-primary btn-sm">
                     <span class="mdi mdi-link" aria-hidden="true"></span> Connect
@@ -240,7 +237,6 @@
           {% endif %}
         </div>
       </div>
-
       {% if object.is_wireless %}
         <div class="card">
           <h5 class="card-header">Wireless</h5>
