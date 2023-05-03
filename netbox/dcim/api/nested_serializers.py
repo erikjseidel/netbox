@@ -521,3 +521,4 @@ class NestedVirtualLinkSerializer(WritableNestedSerializer):
 
     class Meta:
         model = models.VirtualLink
+        fields = ['id', 'url', 'display']

@@ -19,6 +19,7 @@ from ipam.models import ASN, RIR, VLAN, VRF
 from tenancy.models import Tenant
 from utilities.choices import ImportFormatChoices
 from utilities.testing import ViewTestCases, create_tags, create_test_device, post_data
+from wireless.choices import WirelessChannelChoices
 from wireless.models import WirelessLAN
 
 
