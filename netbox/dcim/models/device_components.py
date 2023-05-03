@@ -133,14 +133,12 @@ class VirtualLink(PrimaryModel):
     """
     interface_a = models.ForeignKey(
         to='dcim.Interface',
-        # limit_choices_to=get_wireless_interface_types,
         on_delete=models.PROTECT,
         related_name='+',
         verbose_name="Interface A",
     )
     interface_b = models.ForeignKey(
         to='dcim.Interface',
-        # limit_choices_to=get_wireless_interface_types,
         on_delete=models.PROTECT,
         related_name='+',
         verbose_name="Interface B",
@@ -198,13 +196,13 @@ class VirtualLink(PrimaryModel):
     def clean(self):
 
         # Validate interface types
-        if self.interface_a.type in WIRELESS_IFACE_TYPES:
+        if self.interface_a.type not in VIRTUAL_IFACE_TYPES:
             raise ValidationError({
-                'interface_a': f"{self.interface_a.get_type_display()} is a wireless interface."
+                'interface_a': f"{self.interface_a.get_type_display()} is not a virtual interface."
             })
-        if self.interface_b.type in WIRELESS_IFACE_TYPES:
+        if self.interface_b.type not in VIRTUAL_IFACE_TYPES:
             raise ValidationError({
-                'interface_a': f"{self.interface_b.get_type_display()} is a wireless interface."
+                'interface_a': f"{self.interface_b.get_type_display()} is not a virtual interface."
             })
 
     def save(self, *args, **kwargs):
