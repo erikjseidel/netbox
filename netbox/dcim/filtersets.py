@@ -1983,7 +1983,6 @@ class VirtualLinkFilterSet(NetBoxModelFilterSet, TenancyFilterSet):
         if not value.strip():
             return queryset
         qs_filter = (
-            Q(ssid__icontains=value) |
             Q(description__icontains=value)
         )
         return queryset.filter(qs_filter)

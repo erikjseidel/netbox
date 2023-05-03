@@ -40,6 +40,5 @@ class VirtualLinkTable(TenancyColumnsMixin, NetBoxTable):
             'tenant_group', 'description', 'tags', 'created', 'last_updated',
         )
         default_columns = (
-            'pk', 'id', 'status', 'device_a', 'interface_a', 'device_b', 'interface_b', 'ssid',
-            'description',
+            'pk', 'id', 'status', 'device_a', 'interface_a', 'device_b', 'interface_b', 'description',
         )
