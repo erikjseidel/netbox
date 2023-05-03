@@ -786,6 +786,7 @@ class InterfaceTypeChoices(ChoiceSet):
     TYPE_L2GRE = 'l2gre'
     TYPE_GRE = 'gre'
     TYPE_DUMMY = 'dummy'
+    TYPE_VETH = 'veth'
 
     # Ethernet
     TYPE_100ME_FX = '100base-fx'
@@ -925,6 +926,7 @@ class InterfaceTypeChoices(ChoiceSet):
                 (TYPE_L2GRE, 'Layer 2 GRE Tunnel'),
                 (TYPE_GRE, 'GRE Tunnel'),
                 (TYPE_DUMMY, 'Linux Dummy'),
+                (TYPE_VETH, 'Virtual Ethernet'),
             ),
         ),
         (
