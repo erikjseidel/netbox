@@ -8,6 +8,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('dcim', '0161_cabling_cleanup'),
         ('dcim', '0135_tenancy_extensions'),
+        ('dcim', '0162_unique_constraints'),
     ]
 
     operations = [
