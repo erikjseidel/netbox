@@ -36,6 +36,9 @@ VIRTUAL_IFACE_TYPES = [
     InterfaceTypeChoices.TYPE_VIRTUAL,
     InterfaceTypeChoices.TYPE_LAG,
     InterfaceTypeChoices.TYPE_BRIDGE,
+    InterfaceTypeChoices.TYPE_L2GRE,
+    InterfaceTypeChoices.TYPE_GRE,
+    InterfaceTypeChoices.TYPE_DUMMY,
 ]
 
 WIRELESS_IFACE_TYPES = [

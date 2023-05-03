@@ -783,6 +783,9 @@ class InterfaceTypeChoices(ChoiceSet):
     TYPE_VIRTUAL = 'virtual'
     TYPE_BRIDGE = 'bridge'
     TYPE_LAG = 'lag'
+    TYPE_L2GRE = 'l2gre'
+    TYPE_GRE = 'gre'
+    TYPE_DUMMY = 'dummy'
 
     # Ethernet
     TYPE_100ME_FX = '100base-fx'
@@ -919,6 +922,9 @@ class InterfaceTypeChoices(ChoiceSet):
                 (TYPE_VIRTUAL, 'Virtual'),
                 (TYPE_BRIDGE, 'Bridge'),
                 (TYPE_LAG, 'Link Aggregation Group (LAG)'),
+                (TYPE_L2GRE, 'Layer 2 GRE Tunnel'),
+                (TYPE_GRE, 'GRE Tunnel'),
+                (TYPE_DUMMY, 'Linux Dummy'),
             ),
         ),
         (
