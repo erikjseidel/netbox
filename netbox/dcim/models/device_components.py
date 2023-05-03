@@ -175,6 +175,8 @@ class VirtualLink(PrimaryModel):
         null=True
     )
 
+    clone_fields = ('status',)
+
     class Meta:
         ordering = ['pk']
         constraints = (
