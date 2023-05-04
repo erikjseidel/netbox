@@ -185,8 +185,6 @@ class VirtualLink(PrimaryModel):
         )
 
     def __str__(self):
-        # if self.pk is not None:
-        #    return f'#{self.pk}'
         return super().__str__() or f'#{self.pk}'
 
     def get_absolute_url(self):
