@@ -1444,7 +1444,7 @@ class VirtualLinkBulkEditForm(NetBoxModelBulkEditForm):
 
     model = VirtualLink
     fieldsets = (
-        (None, ('status', 'tenant', 'description'))
+        (None, ('status', 'tenant', 'description')),
     )
     nullable_fields = (
         'tenant', 'description', 'comments',
