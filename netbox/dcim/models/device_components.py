@@ -185,7 +185,7 @@ class VirtualLink(PrimaryModel):
         )
 
     def __str__(self):
-        return super().__str__() or f'#{self.pk}'
+        return f'{self.object_type} {self.object_id}'
 
     def get_absolute_url(self):
         return reverse('dcim:virtuallink', args=[self.pk])
