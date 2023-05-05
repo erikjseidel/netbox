@@ -40,6 +40,7 @@ VIRTUAL_IFACE_TYPES = [
     InterfaceTypeChoices.TYPE_GRE,
     InterfaceTypeChoices.TYPE_DUMMY,
     InterfaceTypeChoices.TYPE_VETH,
+    InterfaceTypeChoices.TYPE_VLAN,
 ]
 
 WIRELESS_IFACE_TYPES = [
