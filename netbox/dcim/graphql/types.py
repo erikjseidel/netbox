@@ -4,7 +4,7 @@ from dcim import filtersets, models
 from extras.graphql.mixins import (
     ChangelogMixin, ConfigContextMixin, ContactsMixin, CustomFieldsMixin, ImageAttachmentsMixin, TagsMixin,
 )
-from ipam.graphql.mixins import IPAddressesMixin, VLANGroupsMixin
+from ipam.graphql.mixins import IPAddressesMixin, VLANGroupsMixin, L2VPNTerminationsMixin
 from netbox.graphql.scalars import BigInt
 from netbox.graphql.types import BaseObjectType, OrganizationalObjectType, NetBoxObjectType
 from .mixins import CabledObjectMixin, PathEndpointMixin
@@ -242,7 +242,7 @@ class FrontPortTemplateType(ComponentTemplateObjectType):
         filterset_class = filtersets.FrontPortTemplateFilterSet
 
 
-class InterfaceType(IPAddressesMixin, ComponentObjectType, CabledObjectMixin, PathEndpointMixin):
+class InterfaceType(IPAddressesMixin, ComponentObjectType, CabledObjectMixin, PathEndpointMixin, L2VPNTerminationsMixin):
 
     class Meta:
         model = models.Interface

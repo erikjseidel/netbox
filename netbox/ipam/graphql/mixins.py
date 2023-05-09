@@ -3,6 +3,7 @@ import graphene
 __all__ = (
     'IPAddressesMixin',
     'VLANGroupsMixin',
+    'L2VPNTerminationsMixin',
 )
 
 
@@ -18,3 +19,10 @@ class VLANGroupsMixin:
 
     def resolve_vlan_groups(self, info):
         return self.vlan_groups.restrict(info.context.user, 'view')
+
+
+class L2VPNTerminationsMixin:
+    l2vpn_terminations = graphene.List('ipam.graphql.types.L2VPNTerminationType')
+
+    def resolve_l2vpn_terminations(self, info):
+        return self.l2vpn_terminations.restrict(info.context.user, 'view')
