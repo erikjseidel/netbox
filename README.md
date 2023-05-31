@@ -3,7 +3,7 @@ Fork of the Netbox Community project [1] for the SaltStack SoT integration PoC
 
 Based on 3.5 with select incremental changes pulled in from 3.5.1 and 3.5.2.
 
-## The chief customizations
+## The primary customizations
 
 (1) A Virtual Link model - similar to Wireless Link - to map connections between Virtual Interfaces
 
