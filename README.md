@@ -28,7 +28,7 @@ Follow the instruction there [2] with the following slight modifications:
 (2) You can then build the new containers using the following command:
 
 ```
-SRC_ORG=erikjseidel SRC_repo=netbox ./build.sh master
+SRC_ORG=erikjseidel SRC_REPO=netbox ./build.sh master
 ```
 Once the containers are up it can be used normally per instructions found in the Netbox Docker project.
 
