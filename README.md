@@ -6,8 +6,11 @@ Based on 3.5 with select incremental changes pulled in from 3.5.1 and 3.5.2.
 ## The chief customizations
 
 (1) A Virtual Link model - similar to Wireless Link - to map connections between Virtual Interfaces
+
 (2) The addition of several Virtual Interface types
+
 (3) Allow virtual interface types to be parents of other interfaces
+
 (4) Additional Graphql Mixin to allow easier querying of L2VPN relations from interface endpoints
 
 ## Getting Started
